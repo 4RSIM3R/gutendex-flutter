@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_alice/alice.dart';
 import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote.dart';
+import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote_impl.dart';
+import 'package:next_starter/data/repositories/book_repository.dart';
 
 import 'common/network/network_info.dart';
 import 'common/permission/permission.dart';
@@ -35,4 +38,7 @@ Future<void> initializeDependencies(GlobalKey<NavigatorState> navigatorKey) asyn
   locator.registerSingleton<SharedPrefStorageInterface>(SharedPreferenceStorage());
   locator.registerLazySingleton<StorageInterface>(() => Storage(permission: locator.get(), storagePath: locator.get()));
   locator.registerLazySingleton<SessionSource>(() => SessionSource(shared: locator()));
+
+  locator.registerSingleton<BookRemote>(BookRemoteImpl(locator.get(), locator.get()));
+  locator.registerSingleton(BookRepository(locator.get(), locator.get()));
 }

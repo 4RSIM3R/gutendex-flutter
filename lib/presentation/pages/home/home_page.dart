@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:next_starter/presentation/layouts/book/book_;ayout.dart';
+import 'package:next_starter/presentation/layouts/book/book_layout.dart';
 import 'package:next_starter/presentation/layouts/home/home_layout.dart';
 
 class HomePage extends StatefulWidget {
