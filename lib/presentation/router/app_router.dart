@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:next_starter/presentation/router/routes/book_route.dart';
 
 import '../pages/pages.dart';
 import 'routes/general_route.dart';
@@ -15,6 +16,7 @@ class AppRouter {
           builder: (context, state) => const SplashPage(),
         ),
         ...GeneralRoute.routes,
+        ...BookRoute.routes,
       ],
     );
   }
