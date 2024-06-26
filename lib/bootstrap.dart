@@ -33,7 +33,6 @@ Future<void> bootstrap() async {
       };
       runApp(AppPage(navigatorKey: navigatorKey));
     },
-    (Object error, StackTrace stackTrace) =>
-        logger.e(error.toString(), error: error, stackTrace: stackTrace),
+    (Object error, StackTrace stackTrace) => logger.e(error.toString(), error: error, stackTrace: stackTrace),
   );
 }
