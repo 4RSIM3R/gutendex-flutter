@@ -1,11 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 
 import '../../common/extensions/extensions.dart';
-import '../../data/datasources/session/session_source.dart';
-import '../../injection.dart';
-import '../components/components.dart';
-import '../theme/theme.dart';
-import 'auth/auth.dart';
 import 'home/home_page.dart';
 
 class SplashPage extends StatefulWidget {
@@ -21,31 +18,29 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
-    init();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      init();
+    });
   }
 
   Future<void> init() async {
-    await 3.delayedSeconds;
-    final user = await locator<SessionSource>().hasSession;
-    if (user) {
-      context.route.replace(HomePage.path);
-      return;
-    }
-    context.route.replace(LoginPage.path);
+    await 1.delayedSeconds;
+    context.route.replace(HomePage.path);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          borderRadius: 12.rounded,
-          border: Border.all(
-            color: ColorTheme.primary,
+      backgroundColor: Colors.white,
+      body: Center(
+        child: Container(
+          height: 120,
+          width: 120,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(8),
           ),
         ),
-        child: const BaseLogo(),
       ),
     );
   }
