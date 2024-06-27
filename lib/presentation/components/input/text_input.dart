@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../common/constants.dart';
@@ -8,7 +7,6 @@ import '../../theme/theme.dart';
 class TextInput extends StatefulWidget {
   const TextInput({
     super.key,
-    required this.title,
     required this.formControlName,
     required this.hint,
     this.textInputType = TextInputType.text,
@@ -20,7 +18,6 @@ class TextInput extends StatefulWidget {
     this.onChanged,
   });
 
-  final String title;
   final String formControlName;
   final String hint;
   final TextInputType textInputType;
@@ -49,22 +46,6 @@ class _TextInputState extends State<TextInput> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(
-                text: widget.title,
-              ),
-              if (widget.isRequiredText)
-                TextSpan(
-                  text: "*",
-                  style: CustomTextTheme.caption.copyWith(color: ColorTheme.statusRed),
-                ),
-            ],
-          ),
-          style: CustomTextTheme.paragraph1.copyWith(fontWeight: FontWeight.w700),
-        ),
-        6.verticalSpace,
         ReactiveTextField(
           keyboardType: widget.textInputType,
           formControlName: widget.formControlName,

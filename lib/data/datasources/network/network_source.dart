@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
-import 'package:dio_http2_adapter/dio_http2_adapter.dart';
 import 'package:flavor/flavor.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,7 +22,6 @@ abstract class ApiService {
         },
       ),
     );
-    dio.httpClientAdapter = Http2Adapter(ConnectionManager(idleTimeout: const Duration(seconds: 15)));
 
     // enable http
     (dio.httpClientAdapter as IOHttpClientAdapter).createHttpClient = () {

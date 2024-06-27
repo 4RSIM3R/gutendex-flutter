@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:next_starter/common/extensions/extensions.dart';
 import 'package:next_starter/data/repositories/book_repository.dart';
 import 'package:next_starter/injection.dart';
+import 'package:next_starter/presentation/components/components.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 
 class HomeLayout extends StatefulWidget {
   const HomeLayout({super.key});
@@ -12,6 +15,8 @@ class HomeLayout extends StatefulWidget {
 class _HomeLayoutState extends State<HomeLayout> {
   final _repo = locator<BookRepository>();
 
+  final _form = fb.group({'search': []});
+
   @override
   void initState() {
     super.initState();
@@ -20,6 +25,27 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold();
+    return Scaffold(
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: ReactiveFormBuilder(
+            form: () => _form,
+            builder: (context, form, child) {
+              return  Column(
+                children: [
+                  const TextInput(
+                    formControlName: 'search',
+                    hint: 'Search Book...',
+                  ),
+                  const Column(
+                    children: [
+                      
+                    ],
+                  ).expand()
+                ],
+              );
+            }),
+      ),
+    );
   }
 }
