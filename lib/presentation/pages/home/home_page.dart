@@ -13,7 +13,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final _layouts = [const HomeLayout(), const BookLayout()];
+  final _layouts = [
+    const HomeLayout(),
+    const BookLayout(),
+  ];
 
   int _index = 0;
 
@@ -34,6 +37,7 @@ class _HomePageState extends State<HomePage> {
       ),
       body: _layouts[_index],
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _index,
         onTap: (value) => setState(() => _index = value),
         items: const [
           BottomNavigationBarItem(
@@ -42,10 +46,10 @@ class _HomePageState extends State<HomePage> {
             tooltip: 'Home',
           ),
           BottomNavigationBarItem(
-              icon: Icon(CupertinoIcons.heart),
-              label: 'Home',
-              tooltip: 'Home',
-              activeIcon: Icon(CupertinoIcons.heart_fill)),
+            icon: Icon(CupertinoIcons.heart),
+            label: 'Home',
+            tooltip: 'Home',
+          ),
         ],
       ),
     );

@@ -16,6 +16,7 @@ class TextInput extends StatefulWidget {
     this.prefix,
     this.suffix,
     this.onChanged,
+    this.readOnly = false,
   });
 
   final String formControlName;
@@ -26,6 +27,7 @@ class TextInput extends StatefulWidget {
   final int maxLines;
   final Widget? prefix;
   final Widget? suffix;
+  final bool readOnly;
   final Function(FormControl<Object?>)? onChanged;
 
   @override
@@ -47,6 +49,7 @@ class _TextInputState extends State<TextInput> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         ReactiveTextField(
+          readOnly: widget.readOnly,
           keyboardType: widget.textInputType,
           formControlName: widget.formControlName,
           style: CustomTextTheme.paragraph2.copyWith(color: ColorTheme.neutral[800]),

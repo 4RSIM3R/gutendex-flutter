@@ -18,7 +18,7 @@ class BookCard extends StatelessWidget {
       },
       leading: const Icon(CupertinoIcons.book, color: Colors.blue),
       title: Text(
-        model.title ?? '-',
+        '(${model.id}) ${model.title ?? '-'}',
         style: CustomTextTheme.paragraph1.copyWith(fontWeight: FontWeight.w600),
         maxLines: 1,
         softWrap: true,
