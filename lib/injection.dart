@@ -43,6 +43,6 @@ Future<void> initializeDependencies(GlobalKey<NavigatorState> navigatorKey) asyn
   locator.registerSingleton<BookRemote>(BookRemoteImpl(locator.get(), locator.get()));
   locator.registerSingleton(BookRepository(locator.get(), locator.get()));
 
-  locator.registerSingleton(HomeBloc.new);
+  locator.registerSingleton<HomeBloc>(HomeBloc(locator.get()));
 
 }

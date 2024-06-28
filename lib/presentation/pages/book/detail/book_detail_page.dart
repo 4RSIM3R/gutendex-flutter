@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:next_starter/data/models/book/book_model.dart';
+import 'package:next_starter/presentation/theme/theme.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class BookDetailPage extends StatefulWidget {
@@ -22,6 +23,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         title: const Text('Detail Books'),
         actions: [
           IconButton(
@@ -33,23 +35,44 @@ class _BookDetailPageState extends State<BookDetailPage> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 200,
-            width: double.infinity,
-            decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.circular(8),
-              image: DecorationImage(
-                image: CachedNetworkImageProvider(widget.model.formats?.imageJpeg ?? ''),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                height: 180,
+                width: 120,
+                decoration: BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.circular(8),
+                  image: DecorationImage(
+                    image: CachedNetworkImageProvider(widget.model.formats?.imageJpeg ?? ''),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+              16.horizontalSpace,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  8.verticalSpace,
+                  Text(
+                    widget.model.title ?? '-',
+                    style: CustomTextTheme.paragraph2.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  8.verticalSpace,
+                  Text(
+                    'Author',
+                    style: CustomTextTheme.paragraph1.copyWith(fontWeight: FontWeight.w600),
+                  ),
+                  4.verticalSpace,
+                  ...(widget.model.authors ?? []).map(
+                    (e) => Text(e.name ?? '-').pOnly(bottom: 2),
+                  )
+                ],
+              ).expand()
+            ],
           ),
-          8.verticalSpace,
-          Text(widget.model.title ?? '-'),
-          4.verticalSpace,
-          ...(widget.model.authors ?? []).map(
-            (e) => Text(e.name ?? '-').pOnly(bottom: 2),
-          )
         ],
       ).p16(),
     );

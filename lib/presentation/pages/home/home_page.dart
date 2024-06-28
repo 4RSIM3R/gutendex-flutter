@@ -22,6 +22,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
         centerTitle: true,
         title: const Text('Gutendex'),
         actions: [
@@ -40,12 +41,11 @@ class _HomePageState extends State<HomePage> {
             label: 'Home',
             tooltip: 'Home',
           ),
-           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.heart),
-            label: 'Home',
-            tooltip: 'Home',
-            activeIcon: Icon(CupertinoIcons.heart_fill)
-          ),
+          BottomNavigationBarItem(
+              icon: Icon(CupertinoIcons.heart),
+              label: 'Home',
+              tooltip: 'Home',
+              activeIcon: Icon(CupertinoIcons.heart_fill)),
         ],
       ),
     );

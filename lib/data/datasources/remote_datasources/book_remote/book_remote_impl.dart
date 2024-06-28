@@ -9,14 +9,14 @@ class BookRemoteImpl extends BaseDioRemoteSource implements BookRemote {
   @override
   Future<PaginateBookModel> all({int? page, String? search}) {
     return networkRequest(
-      request: (dio) => dio.get("books"),
+      request: (dio) => dio.get("books", queryParameters: {'page': page, 'search': search}),
       onResponse: (response) => PaginateBookModel.fromJson(response),
     );
   }
 
   @override
   Future<BookModel> detail({required int id}) {
-        return networkRequest(
+    return networkRequest(
       request: (dio) => dio.get('${ApiPath.book}/$id'),
       onResponse: (response) => BookModel.fromJson(response),
     );

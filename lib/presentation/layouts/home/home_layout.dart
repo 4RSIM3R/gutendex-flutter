@@ -34,7 +34,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   }
 
   void _onScroll() {
-    if (_isBottom) {}
+    if (_isBottom) bloc.add(HomeFetchEvent());
   }
 
   @override
@@ -42,6 +42,7 @@ class _HomeLayoutState extends State<HomeLayout> {
     return BlocProvider<HomeBloc>(
       create: (context) => bloc,
       child: Scaffold(
+        backgroundColor: Colors.white,
         body: Padding(
           padding: const EdgeInsets.all(16),
           child: ReactiveFormBuilder(
@@ -65,7 +66,10 @@ class _HomeLayoutState extends State<HomeLayout> {
                           child: SingleChildScrollView(
                             controller: _controller,
                             child: Column(
-                              children: (state.books).map((e) => BookCard(model: e)).toList(),
+                              children: [
+                                ...(state.books).map((e) => BookCard(model: e)),
+                               (state.hasReachedMax ? const SizedBox.shrink() : const Center(child: CircularProgressIndicator.adaptive())) 
+                              ],
                             ),
                           ),
                         )

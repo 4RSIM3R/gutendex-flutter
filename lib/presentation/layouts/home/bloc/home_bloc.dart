@@ -26,7 +26,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       (r) => r.next != null
           ? emit(
               state.copyWith(
-                books: r.results ?? <BookModel>[],
+                books: List.of(state.books)..addAll(r.results ?? <BookModel>[]),
                 page: state.page + 1,
                 hasReachedMax: false,
                 status: HomeStatus.success,
@@ -34,7 +34,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
             )
           : emit(
               state.copyWith(
-                books: r.results ?? <BookModel>[],
+               books: List.of(state.books)..addAll(r.results ?? <BookModel>[]),
                 hasReachedMax: true,
                 status: HomeStatus.success,
               ),
@@ -42,5 +42,21 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     );
   }
 
-  FutureOr<void> _onSearch(HomeSearchEvent event, Emitter<HomeState> emit) async {}
+  FutureOr<void> _onSearch(HomeSearchEvent event, Emitter<HomeState> emit) async {
+    emit(state.copyWith(books: [], status: HomeStatus.initial));
+
+    final response = await repository.all(page: state.page, search: state.search);
+
+    response.fold(
+      (l) => emit(state.copyWith(status: HomeStatus.failure, message: l.message)),
+      (r) => emit(
+        state.copyWith(
+          books: state.books..addAll(r.results ?? <BookModel>[]),
+          page: 1,
+          hasReachedMax: false,
+          status: HomeStatus.success,
+        ),
+      ),
+    );
+  }
 }
