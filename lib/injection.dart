@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote.dart';
 import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote_impl.dart';
 import 'package:next_starter/data/repositories/book_repository.dart';
+import 'package:next_starter/presentation/layouts/home/bloc/home_bloc.dart';
 
 import 'common/network/network_info.dart';
 import 'common/permission/permission.dart';
@@ -41,4 +42,7 @@ Future<void> initializeDependencies(GlobalKey<NavigatorState> navigatorKey) asyn
 
   locator.registerSingleton<BookRemote>(BookRemoteImpl(locator.get(), locator.get()));
   locator.registerSingleton(BookRepository(locator.get(), locator.get()));
+
+  locator.registerSingleton(HomeBloc.new);
+
 }

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:next_starter/common/extensions/extensions.dart';
-import 'package:next_starter/data/repositories/book_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:next_starter/injection.dart';
+import 'package:next_starter/presentation/components/card/book_card.dart';
 import 'package:next_starter/presentation/components/components.dart';
+import 'package:next_starter/presentation/layouts/home/bloc/home_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -13,38 +15,68 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  final _repo = locator<BookRepository>();
-
   final _form = fb.group({'search': []});
+  final _controller = ScrollController();
+  final bloc = locator<HomeBloc>();
+
+  bool get _isBottom {
+    if (!_controller.hasClients) return false;
+    final maxScroll = _controller.position.maxScrollExtent;
+    final currentScroll = _controller.offset;
+    return currentScroll >= (maxScroll * 0.9);
+  }
 
   @override
   void initState() {
     super.initState();
-    _repo.all();
+    bloc.add(HomeFetchEvent());
+    _controller.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_isBottom) {}
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: ReactiveFormBuilder(
+    return BlocProvider<HomeBloc>(
+      create: (context) => bloc,
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(16),
+          child: ReactiveFormBuilder(
             form: () => _form,
             builder: (context, form, child) {
-              return  Column(
-                children: [
-                  const TextInput(
-                    formControlName: 'search',
-                    hint: 'Search Book...',
-                  ),
-                  const Column(
-                    children: [
-                      
-                    ],
-                  ).expand()
-                ],
+              return BlocBuilder<HomeBloc, HomeState>(
+                builder: (context, state) {
+                  if (state.status == HomeStatus.initial) {
+                    return const Center(child: CircularProgressIndicator.adaptive());
+                  } else if (state.status == HomeStatus.initial) {
+                    return Center(child: Text(state.message ?? '-'));
+                  } else {
+                    return Column(
+                      children: [
+                        const TextInput(
+                          formControlName: 'search',
+                          hint: 'Search Book...',
+                        ),
+                        8.verticalSpace,
+                        Expanded(
+                          child: SingleChildScrollView(
+                            controller: _controller,
+                            child: Column(
+                              children: (state.books).map((e) => BookCard(model: e)).toList(),
+                            ),
+                          ),
+                        )
+                      ],
+                    );
+                  }
+                },
               );
-            }),
+            },
+          ),
+        ),
       ),
     );
   }

@@ -1,3 +1,35 @@
+class PaginateBookModel {
+  final int? count;
+  final String? next;
+  final String? previous;
+  final List<BookModel>? results;
+
+  PaginateBookModel({
+    this.count,
+    this.next,
+    this.previous,
+    this.results,
+  });
+
+  factory PaginateBookModel.fromJson(Map<String, dynamic> json) => PaginateBookModel(
+        count: json["count"],
+        next: json["next"],
+        previous: json["previous"],
+        results: json["results"] == null
+            ? []
+            : List<BookModel>.from(
+                json["results"]!.map((x) => BookModel.fromJson(x)),
+              ),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "count": count,
+        "next": next,
+        "previous": previous,
+        "results": results == null ? [] : List<dynamic>.from(results!.map((x) => x.toJson())),
+      };
+}
+
 class BookModel {
   final int? id;
   final String? title;

@@ -8,7 +8,7 @@ class BookRepository extends BaseRepository {
 
   final BookRemote remote;
 
-  EitherResponse<List<BookModel>> all({int? page, String? search}) {
+  EitherResponse<PaginateBookModel> all({int? page, String? search}) {
     return handleNetworkCall(
       call: remote.all(page: page, search: search),
       onSuccess: (r) => r,
