@@ -36,16 +36,18 @@ class BaseRepository {
         }
         return right(onSuccess(data));
       } on ApiException catch (e) {
-        return left(e.when(
-          serverException: (message) => AppError.serverError(message: message),
-          unprocessableEntity: (message, errors) => AppError.validationError(message: message, errors: errors),
-          unAuthorized: (message) => AppError.unAuthorized(message: message),
-          network: () => const AppError.noInternet(),
-          database: (message) => AppError.serverError(message: message, code: 200),
-          connectionTimeOut: () => const AppError.timeOut(),
-          badCertificate: () => const AppError.badCertificate(),
-          badResponse: (msg) => AppError.badResponse(message: msg),
-        ));
+        return left(
+          e.when(
+            serverException: (message) => AppError.serverError(message: message),
+            unprocessableEntity: (message, errors) => AppError.validationError(message: message, errors: errors),
+            unAuthorized: (message) => AppError.unAuthorized(message: message),
+            network: () => const AppError.noInternet(),
+            database: (message) => AppError.serverError(message: message, code: 200),
+            connectionTimeOut: () => const AppError.timeOut(),
+            badCertificate: () => const AppError.badCertificate(),
+            badResponse: (msg) => AppError.badResponse(message: msg),
+          ),
+        );
       }
     } else {
       if (getOnLocal != null) {

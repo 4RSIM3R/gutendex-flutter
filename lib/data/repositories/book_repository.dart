@@ -18,7 +18,7 @@ class BookRepository extends BaseRepository {
           ? PaginateBookModel.fromJson(storage.read('CACHE-$page-$search'))
           : null,
       onSaveToLocal: (r) async {
-        await storage.write('CACHE-$page-$search', r);
+        await storage.write('CACHE-$page-$search', r.toJson());
       },
     );
   }
