@@ -26,7 +26,9 @@ class BaseRepository {
     Future<void> Function(R data)? onSaveToLocal,
     T? getOnLocal,
   }) async {
-    if ((await _networkInfo.getStatus()).first != ConnectivityResult.none) {
+    final status = (await _networkInfo.getStatus()).first;
+    print(status.name);
+    if (status != ConnectivityResult.none) {
       try {
         final data = await call;
         if (onSaveToLocal != null) {
@@ -36,8 +38,7 @@ class BaseRepository {
       } on ApiException catch (e) {
         return left(e.when(
           serverException: (message) => AppError.serverError(message: message),
-          unprocessableEntity: (message, errors) =>
-              AppError.validationError(message: message, errors: errors),
+          unprocessableEntity: (message, errors) => AppError.validationError(message: message, errors: errors),
           unAuthorized: (message) => AppError.unAuthorized(message: message),
           network: () => const AppError.noInternet(),
           database: (message) => AppError.serverError(message: message, code: 200),
