@@ -74,19 +74,6 @@ class _HomeLayoutState extends State<HomeLayout> {
                   8.verticalSpace,
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(state.status.toString()),
-                          Text(state.hasReachedMax.toString()),
-                          Text(state.page.toString()),
-                        ],
-                      );
-                    },
-                  ),
-                  8.verticalSpace,
-                  BlocBuilder<HomeBloc, HomeState>(
-                    builder: (context, state) {
                       if (state.status == HomeStatus.initial) {
                         return const Center(child: CircularProgressIndicator.adaptive());
                       } else if (state.status == HomeStatus.failure) {

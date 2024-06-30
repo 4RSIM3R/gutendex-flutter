@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:next_starter/common/extensions/context_extension.dart';
 import 'package:next_starter/data/models/book/book_model.dart';
 import 'package:next_starter/injection.dart';
+import 'package:next_starter/presentation/components/button/primary_button.dart';
 import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_bloc.dart';
 import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_state.dart';
 import 'package:next_starter/presentation/theme/theme.dart';
@@ -33,12 +35,23 @@ class _BookDetailPageState extends State<BookDetailPage> {
       child: BlocListener<BookDetailBloc, BookDetailState>(
         listener: (context, state) {
           if (state is BookDetailLoadingState) {
-            context.showLoading(msg: "Loading...");
+            context.showLoadingIndicator();
+          }
+
+          if (state is BookDetailFailureState) {
+            context.hideLoading();
+            context.showSnackbar(message: state.message);
+          }
+
+          if (state is BookDetailSuccessState) {
+            context.hideLoading();
+            context.route.pop();
           }
         },
         child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
+            automaticallyImplyLeading: false,
             backgroundColor: Colors.white,
             title: const Text('Detail Books'),
             actions: [
@@ -86,13 +99,36 @@ class _BookDetailPageState extends State<BookDetailPage> {
                       4.verticalSpace,
                       ...(widget.model.authors ?? []).map(
                         (e) => Text(e.name ?? '-').pOnly(bottom: 2),
-                      )
+                      ),
+                      8.verticalSpace,
+                      Text(
+                        'Download Count',
+                        style: CustomTextTheme.paragraph1.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      4.verticalSpace,
+                      Text('${widget.model.downloadCount}')
                     ],
                   ).expand()
                 ],
               ),
+              16.verticalSpace,
+              Text(
+                'Subject',
+                style: CustomTextTheme.paragraph1.copyWith(fontWeight: FontWeight.w600),
+              ),
+              4.verticalSpace,
+              ...(widget.model.subjects ?? []).map(
+                (e) => Text(e).pOnly(bottom: 2),
+              ),
             ],
           ).p16(),
+          bottomNavigationBar: Container(
+            padding: const EdgeInsets.all(16),
+            child: PrimaryButton(
+              title: 'Read Now',
+              onTap: () {},
+            ),
+          ),
         ),
       ),
     );

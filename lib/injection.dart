@@ -46,7 +46,7 @@ Future<void> initializeDependencies(GlobalKey<NavigatorState> navigatorKey) asyn
   locator.registerLazySingleton<SessionSource>(() => SessionSource(shared: locator()));
 
   locator.registerSingleton<BookRemote>(BookRemoteImpl(locator.get(), locator.get()));
-  locator.registerSingleton(BookRepository(locator.get(), locator.get()));
+  locator.registerSingleton(BookRepository(locator.get(), locator.get(), GetStorage()));
 
   locator.registerSingleton<HomeBloc>(HomeBloc(locator.get()));
 
