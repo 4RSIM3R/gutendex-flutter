@@ -26,19 +26,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeSearchEvent>(_onSearch);
   }
 
-  @override
-  void add(event) {
-    if (!isClosed) {
-      super.add(event);
-    }
-  }
+  // @override
+  // void add(event) {
+  //   if (!isClosed) {
+  //     super.add(event);
+  //   }
+  // }
 
   final BookRepository repository;
 
   FutureOr<void> _onFetch(HomeFetchEvent event, Emitter<HomeState> emit) async {
     if (state.hasReachedMax) return;
-
-    print('Request to page : ${state.page}');
 
     final response = await repository.all(page: state.page, search: state.search);
 
