@@ -29,10 +29,6 @@ class _BookLayoutState extends State<BookLayout> {
       ],
       child: Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: const Text('Book Shelf'),
-        ),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: BlocBuilder<BookLayoutBloc, BookLayoutState>(

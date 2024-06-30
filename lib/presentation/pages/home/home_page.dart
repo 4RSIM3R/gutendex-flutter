@@ -46,9 +46,9 @@ class _HomePageState extends State<HomePage> {
             tooltip: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(CupertinoIcons.heart),
-            label: 'Home',
-            tooltip: 'Home',
+            icon: Icon(CupertinoIcons.bookmark),
+            label: 'Shelf',
+            tooltip: 'Shelf',
           ),
         ],
       ),

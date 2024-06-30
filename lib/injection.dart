@@ -10,6 +10,7 @@ import 'package:next_starter/data/datasources/local_datasources/book_local/book_
 import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote.dart';
 import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote_impl.dart';
 import 'package:next_starter/data/repositories/book_repository.dart';
+import 'package:next_starter/presentation/layouts/book/bloc/book_layout_bloc.dart';
 import 'package:next_starter/presentation/layouts/home/bloc/home_bloc.dart';
 import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_bloc.dart';
 
@@ -52,4 +53,6 @@ Future<void> initializeDependencies(GlobalKey<NavigatorState> navigatorKey) asyn
   locator.registerLazySingleton<BookLocal>(() => BookLocalImpl(box: GetStorage()));
 
   locator.registerSingleton<BookDetailBloc>(BookDetailBloc(locator.get()));
+
+  locator.registerSingleton<BookLayoutBloc>(BookLayoutBloc(locator.get()));
 }

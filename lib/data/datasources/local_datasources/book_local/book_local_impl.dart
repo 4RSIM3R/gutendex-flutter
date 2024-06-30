@@ -9,13 +9,13 @@ class BookLocalImpl implements BookLocal {
 
   @override
   Future<bool> add(BookModel model) async {
-    var books = (box.read('BOOKS') as List)..add(model.toJson());
+    var books = ((box.read('BOOKS') as List?) ?? [])..add(model.toJson());
     box.writeIfNull('BOOKS', books);
     return true;
   }
 
   @override
   Future<List<BookModel>> all() async {
-    return (box.read('BOOKS') as List).map((e) => BookModel.fromJson(e)).toList();
+    return ((box.read('BOOKS') as List?) ?? []).map((e) => BookModel.fromJson(e)).toList();
   }
 }

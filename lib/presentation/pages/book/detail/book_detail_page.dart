@@ -3,7 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:go_router/go_router.dart';
 import 'package:next_starter/data/models/book/book_model.dart';
 import 'package:next_starter/injection.dart';
 import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_bloc.dart';
@@ -35,12 +34,6 @@ class _BookDetailPageState extends State<BookDetailPage> {
         listener: (context, state) {
           if (state is BookDetailLoadingState) {
             context.showLoading(msg: "Loading...");
-          } else if (state is BookDetailFailureState) {
-            context.pop();
-            context.showToast(msg: state.message);
-          } else {
-            context.pop();
-            context.pop();
           }
         },
         child: Scaffold(
@@ -53,7 +46,7 @@ class _BookDetailPageState extends State<BookDetailPage> {
                 onPressed: () {
                   bloc.add(widget.model);
                 },
-                icon: const Icon(CupertinoIcons.heart_fill, color: Colors.red),
+                icon: const Icon(CupertinoIcons.heart, color: Colors.red),
               )
             ],
           ),

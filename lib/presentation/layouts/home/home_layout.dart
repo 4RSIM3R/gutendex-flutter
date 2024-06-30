@@ -61,6 +61,7 @@ class _HomeLayoutState extends State<HomeLayout> {
             form: () => _form,
             builder: (context, form, child) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
@@ -73,9 +74,22 @@ class _HomeLayoutState extends State<HomeLayout> {
                   8.verticalSpace,
                   BlocBuilder<HomeBloc, HomeState>(
                     builder: (context, state) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(state.status.toString()),
+                          Text(state.hasReachedMax.toString()),
+                          Text(state.page.toString()),
+                        ],
+                      );
+                    },
+                  ),
+                  8.verticalSpace,
+                  BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
                       if (state.status == HomeStatus.initial) {
                         return const Center(child: CircularProgressIndicator.adaptive());
-                      } else if (state.status == HomeStatus.initial) {
+                      } else if (state.status == HomeStatus.failure) {
                         return Center(child: Text(state.message ?? '-'));
                       } else {
                         return Column(
