@@ -24,11 +24,10 @@ class ApiUtils {
   }
 
   static String parseResponseMessage(Response<dynamic> response) {
-    if (response.data is String) {
-      return validationMessageError(jsonDecode(response.data)['message'], response.statusCode);
-    }
     return validationMessageError(
-        response.data['message'] ?? 'Terjadi Error pada server', response.statusCode);
+      response.data['message'] ?? response.data['detail'] ?? 'Terjadi Error pada server',
+      response.statusCode,
+    );
   }
 
   static String validationMessageError(String message, int? code) {
