@@ -75,6 +75,7 @@ dependencies:
   shimmer: ^3.0.0
   flutter_screenutil: ^5.9.0
   top_snackbar_flutter: ^3.1.0
+  get_storage: ^2.1.1
   # lecle_downloads_path_provider: ^0.0.2+8
 
   # Local Database

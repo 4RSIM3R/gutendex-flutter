@@ -18,17 +18,10 @@ abstract class SharedPrefStorageInterface {
 class SharedPreferenceStorage extends SharedPrefStorageInterface {
   late final FlutterSecureStorage storage;
 
-  SharedPreferenceStorage()
-      : super(
-          collections: <String, String>{},
-        ) {
+  SharedPreferenceStorage() : super(collections: <String, String>{}) {
     storage = const FlutterSecureStorage(
-      aOptions: AndroidOptions(
-        encryptedSharedPreferences: true,
-      ),
-      iOptions: IOSOptions(
-        accessibility: KeychainAccessibility.first_unlock,
-      ),
+      aOptions: AndroidOptions(encryptedSharedPreferences: true),
+      iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
     );
   }
 

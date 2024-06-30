@@ -2,6 +2,8 @@ abstract class BookDetailState {}
 
 class BookDetailInitialState extends BookDetailState {}
 
+class BookDetailLoadingState extends BookDetailState {}
+
 class BookDetailFailureState extends BookDetailState {
   final String message;
 

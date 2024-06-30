@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'common/logging/logger.dart';
 import 'injection.dart';
@@ -25,6 +26,7 @@ Future<void> bootstrap() async {
   return runZonedGuarded(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+      await GetStorage.init();
       final navigatorKey = GlobalKey<NavigatorState>();
       await initializeDependencies(navigatorKey);
       Bloc.observer = AppBlocObserver();

@@ -3,11 +3,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_alice/alice.dart';
 import 'package:get_it/get_it.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:next_starter/data/datasources/local_datasources/book_local/book_local.dart';
+import 'package:next_starter/data/datasources/local_datasources/book_local/book_local_impl.dart';
 import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote.dart';
 import 'package:next_starter/data/datasources/remote_datasources/book_remote/book_remote_impl.dart';
 import 'package:next_starter/data/repositories/book_repository.dart';
 import 'package:next_starter/presentation/layouts/home/bloc/home_bloc.dart';
+import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_bloc.dart';
 
 import 'common/network/network_info.dart';
 import 'common/permission/permission.dart';
@@ -45,4 +49,7 @@ Future<void> initializeDependencies(GlobalKey<NavigatorState> navigatorKey) asyn
 
   locator.registerSingleton<HomeBloc>(HomeBloc(locator.get()));
 
+  locator.registerLazySingleton<BookLocal>(() => BookLocalImpl(box: GetStorage()));
+
+  locator.registerSingleton<BookDetailBloc>(BookDetailBloc(locator.get()));
 }
