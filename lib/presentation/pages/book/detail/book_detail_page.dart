@@ -58,10 +58,16 @@ class _BookDetailPageState extends State<BookDetailPage> {
             actions: [
               IconButton(
                 onPressed: () {
-                  bloc.add(widget.model);
+                  bloc.like(widget.model);
                 },
                 icon: const Icon(CupertinoIcons.heart, color: Colors.red),
-              )
+              ),
+              IconButton(
+                onPressed: () {
+                  bloc.dislike(widget.model);
+                },
+                icon: const Icon(CupertinoIcons.heart_slash, color: Colors.red),
+              ),
             ],
           ),
           body: Column(

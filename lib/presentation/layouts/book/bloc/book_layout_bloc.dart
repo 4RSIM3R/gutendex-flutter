@@ -12,7 +12,7 @@ class BookLayoutBloc extends Cubit<BookLayoutState> {
     safeEmit(BookLayoutLoadingState());
 
     try {
-      final result = await local.all();
+      final result = await local.likes();
       safeEmit(BookLayoutSuccessState(books: result));
     } catch (e) {
       safeEmit(BookLayoutFailureState(message: e.toString()));

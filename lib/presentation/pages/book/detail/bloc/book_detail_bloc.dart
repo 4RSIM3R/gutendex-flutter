@@ -8,11 +8,22 @@ class BookDetailBloc extends Cubit<BookDetailState> {
 
   final BookLocal local;
 
-  Future<void> add(BookModel model) async {
+  Future<void> like(BookModel model) async {
     emit(BookDetailLoadingState());
 
     try {
-      await local.add(model);
+      await local.like(model);
+      emit(BookDetailSuccessState());
+    } catch (e) {
+      emit(BookDetailFailureState(message: e.toString()));
+    }
+  }
+
+  Future<void> dislike(BookModel model) async {
+    emit(BookDetailLoadingState());
+
+    try {
+      await local.dislike(model);
       emit(BookDetailSuccessState());
     } catch (e) {
       emit(BookDetailFailureState(message: e.toString()));

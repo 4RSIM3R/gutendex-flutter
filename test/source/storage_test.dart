@@ -16,37 +16,38 @@ void main() {
   });
 
   group('BookLocalImpl', () {
+    const likeKey = 'BOOK_LIKES';
     test('add() should add a book to storage', () async {
       final book = BookModel(id: 1, title: 'Test Book');
-      when(() => mockGetStorage.read('BOOKS')).thenReturn([]);
-      when(() => mockGetStorage.writeIfNull('BOOKS', any())).thenAnswer((_) async => true);
+      when(() => mockGetStorage.read(likeKey)).thenReturn([]);
+      when(() => mockGetStorage.writeIfNull(likeKey, any())).thenAnswer((_) async => true);
 
-      final result = await bookLocal.add(book);
+      final result = await bookLocal.like(book);
 
       expect(result, true);
-      verify(() => mockGetStorage.read('BOOKS')).called(1);
-      verify(() => mockGetStorage.writeIfNull('BOOKS', [book.toJson()])).called(1);
+      verify(() => mockGetStorage.read(likeKey)).called(1);
+      verify(() => mockGetStorage.writeIfNull(likeKey, [book.toJson()])).called(1);
     });
 
     test('all() should return a list of books from storage', () async {
       final bookJson = {'id': 1, 'title': 'Test Book'};
-      when(() => mockGetStorage.read('BOOKS')).thenReturn([bookJson]);
+      when(() => mockGetStorage.read(likeKey)).thenReturn([bookJson]);
 
-      final result = await bookLocal.all();
+      final result = await bookLocal.likes();
 
       expect(result, isA<List<BookModel>>());
       expect(result.length, 1);
       expect(result.first.title, 'Test Book');
-      verify(() => mockGetStorage.read('BOOKS')).called(1);
+      verify(() => mockGetStorage.read(likeKey)).called(1);
     });
 
     test('all() should return an empty list if no books in storage', () async {
-      when(() => mockGetStorage.read('BOOKS')).thenReturn(null);
+      when(() => mockGetStorage.read(likeKey)).thenReturn(null);
 
-      final result = await bookLocal.all();
+      final result = await bookLocal.likes();
 
       expect(result, isEmpty);
-      verify(() => mockGetStorage.read('BOOKS')).called(1);
+      verify(() => mockGetStorage.read(likeKey)).called(1);
     });
   });
 }

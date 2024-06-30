@@ -8,14 +8,26 @@ class BookLocalImpl implements BookLocal {
   BookLocalImpl({required this.box});
 
   @override
-  Future<bool> add(BookModel model) async {
-    var books = ((box.read('BOOKS') as List?) ?? [])..add(model.toJson());
-    box.writeIfNull('BOOKS', books);
+  Future<bool> like(BookModel model) async {
+    var books = ((box.read('BOOK_LIKES') as List?) ?? [])..add(model.toJson());
+    box.writeIfNull('BOOK_LIKES', books);
     return true;
   }
 
   @override
-  Future<List<BookModel>> all() async {
-    return ((box.read('BOOKS') as List?) ?? []).map((e) => BookModel.fromJson(e)).toList();
+  Future<List<BookModel>> likes() async {
+    return ((box.read('BOOK_LIKES') as List?) ?? []).map((e) => BookModel.fromJson(e)).toList();
+  }
+
+  @override
+  Future<bool> dislike(BookModel model) async {
+    var books = ((box.read('BOOK_DISLIKES') as List?) ?? [])..add(model.toJson());
+    box.writeIfNull('BOOK_DISLIKES', books);
+    return true;
+  }
+
+  @override
+  Future<List<BookModel>> dislikes() async {
+    return ((box.read('BOOK_DISLIKES') as List?) ?? []).map((e) => BookModel.fromJson(e)).toList();
   }
 }
