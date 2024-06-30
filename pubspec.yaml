@@ -78,6 +78,7 @@ dependencies:
   get_storage: ^2.1.1
 
   http_mock_adapter: ^0.6.1
+  url_launcher: ^6.3.0
   # lecle_downloads_path_provider: ^0.0.2+8
 
   # Local Database

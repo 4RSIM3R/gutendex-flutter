@@ -10,6 +10,7 @@ import 'package:next_starter/presentation/components/button/primary_button.dart'
 import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_bloc.dart';
 import 'package:next_starter/presentation/pages/book/detail/bloc/book_detail_state.dart';
 import 'package:next_starter/presentation/theme/theme.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:velocity_x/velocity_x.dart';
 
 class BookDetailPage extends StatefulWidget {
@@ -122,13 +123,17 @@ class _BookDetailPageState extends State<BookDetailPage> {
               ),
             ],
           ).p16(),
-          bottomNavigationBar: Container(
-            padding: const EdgeInsets.all(16),
-            child: PrimaryButton(
-              title: 'Read Now',
-              onTap: () {},
-            ),
-          ),
+          bottomNavigationBar: widget.model.formats?.textHtml != null
+              ? Container(
+                  padding: const EdgeInsets.all(16),
+                  child: PrimaryButton(
+                    title: 'Read Now',
+                    onTap: () {
+                      launchUrl(Uri.parse(widget.model.formats!.textHtml!));
+                    },
+                  ),
+                )
+              : const SizedBox.shrink(),
         ),
       ),
     );
