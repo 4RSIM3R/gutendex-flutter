@@ -14,7 +14,7 @@ class BookRepository extends BaseRepository {
     return handleNetworkCall(
       call: remote.all(page: page, search: search),
       onSuccess: (r) => r,
-      getOnLocal: storage.read('CACHE-$page-$search'),
+      getOnLocal: PaginateBookModel.fromJson(storage.read('CACHE-$page-$search')),
       onSaveToLocal: (r) async {
         await storage.write('CACHE-$page-$search', r);
       },

@@ -26,12 +26,12 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeSearchEvent>(_onSearch);
   }
 
-  // @override
-  // void add(event) {
-  //   if (!isClosed) {
-  //     super.add(event);
-  //   }
-  // }
+  @override
+  void add(event) {
+    if (!isClosed) {
+      super.add(event);
+    }
+  }
 
   final BookRepository repository;
 
